@@ -119,7 +119,7 @@ define(function(require, exports, module) {
         this.signupButton = new Surface({
             content: '<div class="lifted">Login with Silo</div>',
             size: [Utils.WindowWidth(), 60],
-            classes: ['landing-button','facebook-button']
+            classes: ['landing-button','silo-button']
         });
         this.signupButton.on('click', function(){
             // App.history.navigate('signup');

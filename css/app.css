@@ -1,7 +1,7 @@
 
 /* Default background */
 .famous-root {
-  background-color: #4e99dc;
+  background-color: #ee714b;
 }
 
 .overall-background {
@@ -75,7 +75,7 @@
 /* Splash Screen */
 
 .splash-background-default {
-  background: #4e99dc;
+  background: #ee714b;
 
   /*background: #fafafa;
   background: -moz-linear-gradient(top, #fafafa 0%, #fafafa 51%, #207cca 51%, #111111 51%, #111111 100%);
@@ -463,8 +463,8 @@
 }
 
 .landing-page-logo-tagline {
-  padding: 30% 0 10%;
-  background: #4e99dc;
+  padding: 30% 0 20%;
+  background: #ee714b;
   color: white;
 
   text-align: center;
@@ -551,6 +551,14 @@
   color: white;
   border: 0px;
 
+  width: 80%;
+}
+
+.landing-button.silo-button > div {
+  background: #A14023;
+
+  color: white;
+  border: 0px;
   width: 80%;
 }
 
