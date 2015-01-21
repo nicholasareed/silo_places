@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget 
+    id="com.siloapp.places" 
+    version="0.1.0" 
+    xmlns="http://www.w3.org/ns/widgets" 
+    xmlns:gap="http://phonegap.com/ns/1.0" 
+    xmlns:android="http://schemas.android.com/apk/res/android" 
+    xmlns:cdv="http://cordova.apache.org/ns/1.0">
+
+    <name>Places</name>
+    <description>
+        Recommend places
+    </description>
+    <author email="nick@famousmobileapps.com" href="http://famousmobileapps.com">
+        Nicholas Reed
+    </author>
+    <content src="index.html" />
+
+    <access origin="*" />
+
+    <gap:platform name="ios" />
+    <gap:platform name="android" />
+
+    <preference name="phonegap-version" value="3.6.3" />
+
+    <!-- Android SDK Version -->
+    <preference name="android-minSdkVersion" value="14" />
+    <!-- iOS Version -->
+    <preference name="deployment-target" value="7.0" />
+
+    <preference name="orientation" value="portrait" />
+    <preference name="fullscreen" value="false" />
+
+    <preference name="target-device" value="handset" />
+    <preference name="disallowOverscroll" value="true" />
+    <preference name="webviewbounce" value="false" />
+    <preference name="exit-on-suspend" value="false" />
+    <preference name="KeepRunning" value="true" />
+    <preference name="detect-data-types" value="false" />
+
+    <preference name="StatusBarOverlaysWebView" value="true" />
+    <preference name="StatusBarBackgroundColor" value="#000000" />
+    <preference name="StatusBarStyle" value="lightcontent" />
+
+    <preference name="AutoHideSplashScreen" value="false" />
+    <preference name="SplashScreen" value="res/splash/splash.png" />
+    <preference name="SplashScreenDelay" value="10000" />
+
+
+    <!-- name="com.acme.app.pub" -->
+    <gap:url-scheme role="None"> 
+      <scheme>places</scheme>
+    </gap:url-scheme>
+
+    <gap:plugin name="org.apache.cordova.device" />
+    <gap:plugin name="org.apache.cordova.console" />
+    <gap:plugin name="org.apache.cordova.contacts" version="0.2.9" />
+    <gap:plugin name="org.apache.cordova.file" />
+    <gap:plugin name="org.apache.cordova.file-transfer" />
+    <gap:plugin name="org.apache.cordova.camera" />
+    <!-- <gap:plugin name="co.mwater.foregroundcameraplugin" version="0.1.1" /> --> <!-- Not needed if not using CROP or EDIT in image -->
+    <gap:plugin name="org.apache.cordova.inappbrowser" />
+    <gap:plugin name="org.apache.cordova.geolocation" />
+    <gap:plugin name="org.apache.cordova.globalization" />
+    <gap:plugin name="org.apache.cordova.statusbar" />
+    <gap:plugin name="com.phonegap.plugins.pushplugin" />
+    <gap:plugin name="com.phonegap.plugins.barcodescanner" />
+    <gap:plugin name="com.verso.cordova.clipboard" />
+    <gap:plugin name="org.apache.cordova.splashscreen" source="plugins.cordova.io" version="0.3.5" />
+    <gap:plugin name="com.chariotsolutions.nfc.plugin" version="0.5.1" />
+
+    <gap:plugin name="nl.x-services.plugins.socialsharing" />
+    <gap:plugin name="info.asankan.phonegap.smsplugin" />
+    <gap:plugin name="nl.x-services.plugins.toast" />
+    <gap:plugin name="de.appplant.cordova.plugin.local-notification" />
+    <gap:plugin name="com.pylonproducts.wifiwizard" version="0.1.0" />
+
+    <gap:plugin name="com.ionic.keyboard" version="1.0.3" />
+
+    <gap:plugin name="com.danielcwilson.plugins.googleanalytics" version="0.6.1" source="plugins.cordova.io" />
+
+    <gap:plugin name="nl.x-services.plugins.googleplus" version="1.0.8" source="plugins.cordova.io"/>
+
+    <!-- <gap:plugin name="nickreed.com.phonegap.plugins.facebookconnect" version="0.9.1" source="plugins.cordova.io">
+        <param name="APP_ID" value="1576585215910001" />
+        <param name="APP_NAME" value="Places" />
+    </gap:plugin> -->
+
+    <!-- Keyboard setting for Android -->
+    <gap:config-file platform="android" parent="/manifest/application">
+        <activity android:windowSoftInputMode="adjustResize" />
+    </gap:config-file>
+
+
+    <!-- Icons -->
+
+    <!-- Android -->
+    <icon src="res/icon/icon.png" gap:platform="android" />
+
+    <!-- iOS -->
+    <icon src="res/icon/icon.png" gap:platform="ios" />
+
+    <!-- Splash Screens -->
+    <gap:splash src="res/splash/splash.png" gap:platform="android" />
+    <gap:splash src="res/splash/splash.png" gap:platform="ios" width="640" height="1136" />
+    <gap:splash src="res/splash/splash_640x960.png" gap:platform="ios" width="640" height="960" />
+
+
+</widget>

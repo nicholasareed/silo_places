@@ -1,0 +1,191 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title></title>
+        <meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width,height=device-height" />
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <link rel="apple-touch-icon" href="icon.png">
+        <link rel="apple-touch-startup-image" href="splash.png">
+
+        <!-- leaflet / open street maps -->
+        <script src="src/lib2/leaflet/leaflet.js"></script>
+        <link rel="stylesheet" type="text/css" href="src/lib2/leaflet/leaflet.css" />
+
+        <link rel="stylesheet" type="text/css" href="src/famous/core/famous.css" />
+        <link rel="stylesheet" type="text/css" href="css/ionicons.css" />
+        <link rel="stylesheet" type="text/css" href="css/spectrum.css" />
+        <link rel="stylesheet" type="text/css" href="css/bootflat.css" />
+        <link rel="stylesheet" type="text/css" href="css/rrssb.css" />
+
+        <link rel="stylesheet" type="text/css" href="css/general.css" />
+        <link rel="stylesheet" type="text/css" href="css/app.css" />
+
+        <script type="text/javascript" src="src/lib2/firebase.js"></script>
+
+        <script type="text/javascript">
+            var cordova;
+        </script>
+        <script type="text/javascript" src="cordova.js"></script>
+
+        <script type="text/javascript" src="src/lib2/stripe.js"></script>
+
+        <script type="text/javascript" src="src/lib2/fastclick.js"></script>
+        <script type="text/javascript" src="src/lib/functionPrototypeBind.js"></script>
+        <script type="text/javascript" src="src/lib/classList.js"></script>
+        <script type="text/javascript" src="src/lib/requestAnimationFrame.js"></script>
+
+
+        <script type="text/javascript">
+
+            var app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
+            var PhoneGapApp = false;
+            if ( app ) {
+                // PhoneGap application
+                PhoneGapApp = true;
+            } else {
+                // Web page
+            }  
+
+            var GLOBAL_onReady = false;
+
+            // temp fix for iOS8 beta 1 (fixed in beta 2), add it after the reference to cordova.js
+            if (navigator.userAgent === undefined) {
+                navigator.__defineGetter__('userAgent', function() {
+                    return("Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit");
+                });
+            }
+
+            window.addEventListener('load', function() {
+                FastClick.attach(document.body);
+            }, false);
+
+            // Required scripts to add after deviceready
+            var require_scripts = [
+                {
+                    src: "src/lib/require.js",
+                    attr: [{
+                        "data-main" : "src/main"
+                    }]
+                }
+            ];
+
+            var addScripts = function(scripts){
+
+                // Add scripts
+                scripts.forEach(function(script_info){
+
+                    var script = document.createElement( 'script' );
+                    script.type = 'text/javascript';
+
+                    if(typeof(script_info) === 'string'){
+                        script.src = script_info;
+                    } else {
+                        script.src = script_info.src;
+                        if(script_info.attr){
+                            script_info.attr.forEach(function(scriptAttr){
+                                Object.keys(scriptAttr).forEach(function(key){
+                                    script.setAttribute(key, scriptAttr[key]);
+                                });
+                            });
+                        }
+                    }
+
+                    document.body.appendChild( script );
+
+                });
+
+            };
+
+            function onLoad() {
+
+                // browser?
+                if (!navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
+                    // browser
+                    GLOBAL_onReady = true;
+                    addScripts(require_scripts);
+                } else {
+                    try {
+                        if(cordova === undefined){
+                            throw 'addScript';
+                        }
+                    }catch(err){
+                        // browser
+                        console.log('catch browser');
+                        GLOBAL_onReady = true;
+                        addScripts(require_scripts);
+                        return;
+                    }
+
+                }
+
+                // wait for deviceready from cordova
+                console.log('wait for deviceready from cordova');
+                document.addEventListener("deviceready", function(){
+                    // alert('deviceready listener fired!');
+                    GLOBAL_onReady = true;
+                    addScripts(require_scripts);
+                }, false);
+
+
+            }
+
+            function handleOpenURL(url, not_immediate) {
+                console.log('handleOpenURL');
+                console.log(url);
+                setTimeout(function() {
+                    if(App && App.Events){
+                        if(not_immediate){
+                            setTimeout(function(){
+                                App.Events.emit('handle-open-url', url);
+                            },1000); // give it an extra second to finish loading everything
+                        } else {
+                            // no delay in launching
+                            App.Events.emit('handle-open-url', url);
+                        }
+                    } else {
+                        handleOpenURL(url, true);
+                    }
+
+                }, 500);
+            }
+
+            function visitLink(event, elem, url){
+                console.log(url);
+                if (event.stopPropagation) {
+                    event.stopPropagation();   // W3C model
+                } else {
+                    event.cancelBubble = true; // IE model
+                }
+
+                window.open(url, '_system', 'location=yes');
+
+            }
+
+        </script>
+        
+
+    </head>
+    <body onload="onLoad()" style="background:#fafafa;">
+        
+        <div class="before-loaded-screen">
+            <table style="width: 100%;height:100%">
+              <tr>
+                 <td style="text-align: center; vertical-align: middle;">
+
+                    <img src="icon.png" />
+                    
+                    <!-- <div class="title"></div> -->
+                    <!-- <div class="subtitle"></div> -->
+                    <!-- <div class="is-loading">Preparing. Pleast Wait.</div> -->
+
+                 </td>
+              </tr>
+            </table>
+        </div>
+
+        <script src="https://apis.google.com/js/client:platform.js" async defer></script>
+
+    </body>
+</html>

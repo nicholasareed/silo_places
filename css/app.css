@@ -1,0 +1,905 @@
+
+/* Default background */
+.famous-root {
+  background-color: #4e99dc;
+}
+
+.overall-background {
+  background: #fafafa;
+  /*background: #34495e;*/
+  /*background: url('../img/zwartevilt.png') repeat;*/
+}
+
+
+.status-bar-default {
+  /*background: #206D9A;*/
+  background: #111;
+  /*opacity: 0.7;*/
+}
+
+.status-bar-green {
+  background: green;
+  opacity: 0.7;
+}
+
+
+
+/* Before loaded (device not yet ready, famous not loaded) screen */
+
+
+.before-loaded-screen {
+
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+/*
+  display: table-cell;
+  vertical-align: middle;*/
+  
+  /*font-weight: bold;*/
+  font-family: Helvetica, Arial, sans-serif;
+
+  line-height: 20px;
+  font-size: 14px;
+
+  color: rgba(255,255,255,0.8);
+
+  text-align: center;
+}
+
+.before-loaded-screen img {
+  width: 120px;
+}
+
+.before-loaded-screen div.title {
+  line-height: 22px;
+  font-size: 18px;
+}
+
+.before-loaded-screen div.subtitle {
+  padding-top: 8px;
+  line-height: 18px;
+  font-size: 14px;
+}
+
+.before-loaded-screen div.is-loading {
+  padding-top: 8px;
+  line-height: 18px;
+  font-size: 14px;
+}
+
+
+
+
+/* Splash Screen */
+
+.splash-background-default {
+  background: #4e99dc;
+
+  /*background: #fafafa;
+  background: -moz-linear-gradient(top, #fafafa 0%, #fafafa 51%, #207cca 51%, #111111 51%, #111111 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fafafa), color-stop(51%,#fafafa), color-stop(51%,#207cca), color-stop(51%,#111111), color-stop(100%,#111111));
+  background: -webkit-linear-gradient(top, #fafafa 0%,#fafafa 51%,#207cca 51%,#111111 51%,#111111 100%);
+  background: -o-linear-gradient(top, #fafafa 0%,#fafafa 51%,#207cca 51%,#111111 51%,#111111 100%);
+  background: -ms-linear-gradient(top, #fafafa 0%,#fafafa 51%,#207cca 51%,#111111 51%,#111111 100%);
+  background: linear-gradient(to bottom, #fafafa 0%,#fafafa 51%,#207cca 51%,#111111 51%,#111111 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fafafa', endColorstr='#111111',GradientType=0 );*/
+}
+
+.splash-surface-default {
+  font-size: 36px;
+  font-weight: bold;
+  font-family: Helvetica, Arial, sans-serif;
+
+  line-height: 70px;
+
+  color: #1F2D2D;
+
+
+  text-align: center;
+}
+
+
+
+
+
+
+/* Payment Recipient  - debit card and bank list */
+
+.payment-recipient-list-item-default {
+  line-height: 44px;
+  background: white;
+
+  padding: 0px 8px;
+}
+
+.payment-recipient-list-item-default > div:nth-child(1) {
+
+  padding-top: 8px;
+
+  font-size: 28px;
+  line-height: 34px;
+  color: #333;
+}
+
+
+.payment-recipient-list-item-default > div:nth-child(2) {
+  font-size: 14px;
+  line-height: 20px;
+  color: #333;
+
+  padding-bottom: 16px;
+
+  border-bottom: 1px dashed #ddd;
+}
+
+.payment-recipient-list-item-default div.verified,
+.payment-recipient-list-item-default div.not-verified {
+  text-transform: uppercase;
+
+  font-size: 12px;
+  line-height: 16px;
+  color: #AC5850;
+}
+
+.payment-recipient-list-item-default div.verified {
+  color: #07AC1D;
+}
+
+
+/* Payment Sources  - credit card list */
+
+.payment-source-list-item-default {
+  line-height: 44px;
+  background: white;
+
+  padding: 0px 8px;
+}
+
+.payment-source-list-item-default > div:nth-child(1) {
+
+  padding-top: 8px;
+
+  font-size: 28px;
+  line-height: 34px;
+  color: #333;
+}
+
+
+.payment-source-list-item-default > div:nth-child(2) {
+  font-size: 14px;
+  line-height: 20px;
+  color: #333;
+
+  padding-bottom: 16px;
+  
+  border-bottom: 1px dashed #ddd;
+}
+
+
+
+/* Waiting list */
+
+.waiting-list-top-default {
+  text-align: center;
+
+  font-size: 28px;
+  line-height: 200px;
+
+}
+
+.waiting-list-position-default {
+  text-align: center;
+  line-height: 80px;
+  font-size: 64px;
+}
+
+
+
+
+/* Top Tabs Connect Friends */
+
+.top-tabs-scroller-item-default {
+  color: #444;
+  line-height: 60px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.top-tabs-scroller-item-default > div {
+  display: inline-block;
+  padding: 4px 14px;
+
+  line-height: 20px;
+}
+.top-tabs-scroller-item-default.selected > div {
+  background: #444;
+  color: white;
+}
+
+
+
+/* Friend List */
+
+.friend-list-tabbar-default {
+  /*border-top: 2px solid #444;*/
+  border-bottom: 1px solid #ddd;
+  /*background: white;*/
+  background: rgba(255,255,255,0.5);
+  text-align: center;
+  line-height: 15px;
+  font-size: 12px;
+  color: #444;
+
+  text-transform: uppercase;
+}
+.friend-list-tabbar-default.on {
+  color: #339bcb;
+}
+.friend-list-tabbar-default i {
+  font-size: 32px;
+  line-height: 50px;
+}
+
+.friend-list-tabbar-default div {
+  font-size: 12px;
+  line-height: 80px;
+}
+
+
+
+/* Friend Invite List (with "Tap to Send"( */
+
+.invite-users-list-item-default {
+  padding: 4px;
+  line-height: 40px;
+  font-size: 24px;
+}
+
+.invite-users-list-item-button {
+  line-height: 40px;
+  font-size: 24px;
+
+  padding: 4px;
+
+  text-align: center;
+}
+
+.invite-users-list-item-button div {
+  display: inline-block;
+  padding: 0px 4px;
+  border: 1px solid #ddd;
+  background: #fafafa;
+
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+
+}
+
+.invite-users-list-item-button.sent div {
+  background: #0A5A1F; 
+  color: white; 
+}
+
+
+
+/* Select Friend(s) */
+  
+.friend-list-item-default {
+  /*line-height: 44px;*/
+  background: white;
+
+  padding: 0px 8px;
+
+}
+
+.friend-list-item-default > div:nth-child(1) {
+
+  padding-top: 8px;
+
+  font-size: 28px;
+  line-height: 32px;
+  color: #333;
+}
+
+
+.friend-list-item-default > div:nth-child(2) {
+  font-size: 14px;
+  line-height: 20px;
+  color: #333;
+}
+
+.friend-list-item-default > div:last-child {
+  border-bottom: 1px dashed #ddd;
+}
+
+.friend-list-item-default .last-updated {
+  padding-bottom: 10px;
+  opacity: 0.9;
+}
+
+.friend-list-item-default .last-updated span {
+  opacity: 0.9;
+}
+
+
+
+
+/* Payment Source modal/select */
+
+.modal-option-list-default.card-line-default {
+  padding: 10px 8px;
+}
+
+.modal-option-list-default.card-line-default > div:nth-child(1) {
+  font-size: 22px;
+  line-height: 28px;
+}
+
+.modal-option-list-default.card-line-default > div:nth-child(2) {
+  font-size: 12px;
+  line-height: 20px;
+} 
+
+
+
+
+/* View User */
+
+.view-user-bio-default {
+  padding: 14px;
+}
+
+.view-user-bio-default > div {
+  padding: 8px;
+  border: 1px solid #eee;
+  background: #fefefe;
+}
+
+.view-user-background-check-default {
+  line-height: 80px;
+  text-align: center;
+
+  font-size: 24px;
+}
+
+
+
+
+/* Profile */
+
+/* Searching Usernames / Users */
+
+.user-search-list-item-default {
+  line-height: 44px;
+  background: white;
+
+  padding: 0px 8px;
+
+  border-bottom: 1px dashed #ddd;
+}
+
+.user-search-list-item-default > div:nth-child(1) {
+  font-size: 18px;
+  line-height: 20px;
+  color: #333;
+
+  padding-top: 10px;
+}
+
+.user-search-list-item-default > div:nth-child(2) {
+  font-size: 14px;
+  line-height: 20px;
+  color: #333;
+}
+
+
+/* News / Actions */
+
+.news-surface-temp {
+
+}
+
+.news-surface-temp > div {
+  font-size: 28px;
+  color: #888;
+}
+
+/* Actions Tabbar */
+
+.actions-news-tabbar-default {
+  /*border-top: 2px solid #444;*/
+  border-bottom: 1px solid #ddd;
+  background: white;
+  text-align: center;
+  line-height: 40px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #182030;
+
+  text-transform: uppercase;
+}
+.actions-news-tabbar-default.on {
+  color: #339bcb;
+}
+
+/* action items */
+
+.action-news-item-default {
+  line-height: 20px;
+  padding: 10px;
+  border-bottom: 1px dashed #ddd;
+}
+
+.action-news-item-default span.type {
+  opacity: 0.7;
+}
+
+.action-news-item-default span[data-replace-model="Player"] {
+  font-weight: bold;
+  color: #182030;
+}
+
+.action-news-item-default span[data-replace-model="Sport"] {
+  font-weight: bold;
+  color: #900CE8;
+}
+
+.action-news-item-default span.datetime {
+  color: #888;
+}
+
+
+
+
+/* Landing Page */
+
+.landing-page-bg-default {
+  /*background: url('../img/landingbg.png') no-repeat;*/
+  /*background: #fafafa;*/
+  /*background: url('https://dl.dropboxusercontent.com/u/6673634/landingWelcome4%402x.png') no-repeat;*/
+  background-size: cover;
+}
+
+.landing-page-logo-tagline {
+  padding: 30% 0 10%;
+  background: #4e99dc;
+  color: white;
+
+  text-align: center;
+
+  border-bottom: 1px solid #fdfdfd;
+}
+
+.landing-page-logo-tagline > div:nth-child(1) {
+  font-size: 72px;
+  line-height: 80px;
+}
+
+.landing-page-logo-tagline > div:nth-child(2) {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.landing-title-bg-gradient {
+
+  /*background: rgb(212,161,118);
+  background: -moz-linear-gradient(top, rgba(212,161,118,1) 0%, rgba(255,236,178,1) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(212,161,118,1)), color-stop(100%,rgba(255,236,178,1)));
+  background: -webkit-linear-gradient(top, rgba(212,161,118,1) 0%,rgba(255,236,178,1) 100%);
+  background: -o-linear-gradient(top, rgba(212,161,118,1) 0%,rgba(255,236,178,1) 100%);
+  background: -ms-linear-gradient(top, rgba(212,161,118,1) 0%,rgba(255,236,178,1) 100%);
+  background: linear-gradient(to bottom, rgba(212,161,118,1) 0%,rgba(255,236,178,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d4a176', endColorstr='#ffecb2',GradientType=0 );*/
+
+  /*
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(36%,rgba(255,255,255,1)), color-stop(44%,rgba(255,255,255,0.92)), color-stop(100%,rgba(255,255,255,0)));
+  background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 36%,rgba(255,255,255,0.92) 44%,rgba(255,255,255,0) 100%);
+  background: -o-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 36%,rgba(255,255,255,0.92) 44%,rgba(255,255,255,0) 100%);
+  background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 36%,rgba(255,255,255,0.92) 44%,rgba(255,255,255,0) 100%);
+  background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 36%,rgba(255,255,255,0.92) 44%,rgba(255,255,255,0) 100%);
+  */
+}
+
+.landing-button {
+  color: white;
+  padding: 8px 0; 
+  text-align: center;
+}
+
+.landing-button > div {
+  position: relative;
+
+  display: inline-block;
+  /*background: #182030;*/
+  background: white;
+  border: 1px solid #dadada;
+  color: #444;
+
+  padding: 14px 8px;
+  width: 70%;
+
+  white-space: nowrap;
+  /*overflow: hidden;*/
+
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+
+}
+
+.landing-button > div span {
+  position: absolute;
+
+  display: inline-block;
+
+  border-right: 1px solid rgba(255,255,255,0.2);
+
+  left: 0px;
+  top: 6px;
+
+  width: 44px;
+
+  text-align: center;
+
+  font-size: 28px;
+  line-height: 32px;
+}
+
+.landing-button.facebook-button > div {
+  background: #3d5d97;
+  color: white;
+  border: 0px;
+
+  width: 80%;
+}
+
+.landing-button.gplus-button > div {
+  background: #c54951;
+  color: white;
+  border: 0px;
+
+  width: 80%;
+}
+
+.gplus-button > div {
+  
+}
+
+
+.landing-button.signup-button {
+  text-align: right;
+}
+
+.landing-button.login-button {
+  text-align: left;
+}
+
+.landing-button.signup-button > div {
+  width: 72%;
+  text-align: center;
+
+  margin-right: 2%;
+}
+
+
+.landing-button.login-button > div {
+  width: 72%;
+  text-align: center;
+
+  margin-left: 2%;
+}
+
+
+.landing-login-button {
+  font-size: 12px;
+  text-align: center;
+  padding: 16px 8px 8px 8px;
+  /*color: white;*/
+  color: #1F2D2D;
+}
+
+.header-landing-page-text {
+  color: #1F2D2D;
+  text-align: left;
+  line-height: 60px;
+
+  white-space: nowrap;
+  /*overflow: hidden;*/
+
+}
+
+
+/* login */
+
+.login-page-welcome-top-default { /* > div:nth-child(3){*/
+  font-weight: bold;
+  font-size: 58px;
+  line-height: 60px;
+  /*font-family: 'Kaushan Script', cursive;*/
+  text-align: center;
+}
+
+.login-forgot-pass-button {
+  color: #444;
+  line-height: 80px;
+  text-align: center;
+
+  font-size: 14px;
+}
+
+.login-separator {
+
+}
+
+.login-separator div {
+    text-align: center;
+}
+.login-separator span {
+    display: inline-block;    
+}
+.login-separator span:before,
+.login-separator span:after {
+    border-top: 1px solid #444;
+    display: block;
+    height: 1px;
+    content: " ";
+    width: 28%;
+    position: absolute;
+    left: 0;
+    top: 10px;
+}
+.login-separator span:after {
+   right: 0;  
+   left: auto; 
+}
+
+
+.login-circled-icon {
+  padding: 10px 0;
+  text-align: center;
+}
+
+.login-circled-icon div {
+  display: inline-block;
+
+  background: #3d5d97;
+  color: white;
+
+  width: 48px;
+  height: 48px;
+  line-height: 48px;
+
+  font-size: 24px;
+
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+}
+
+
+
+/* welcome ! */
+
+.welcome-page-default {
+  /*background: white;*/
+  text-align: center;
+  color: #333;
+}
+
+.welcome-page-default > div:nth-child(1){
+  font-size: 20px;
+  line-height: 30px;
+}
+
+.welcome-page-default > div:nth-child(2){
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.welcome-page-default > div:nth-child(3){
+  /*font-weight: bold;*/
+  font-size: 72px;
+  line-height: 80px;
+  /*font-family: 'Kaushan Script', cursive;*/
+}
+
+.welcome-page-default > div:nth-child(4) {
+  font-size: 26px;
+  line-height: 50px;
+}
+
+.welcome-page-username-default {
+  text-align: center;
+  color: #333;
+  line-height: 30px;
+  font-size: 18px;
+}
+
+/* Inbox */
+
+.inbox-tabbar-default {
+  /*border-top: 2px solid #444;*/
+  border-bottom: 1px solid #ddd;
+  background: white;
+  text-align: center;
+  line-height: 15px;
+  font-size: 12px;
+  color: #444;
+
+  text-transform: uppercase;
+}
+.inbox-tabbar-default.on {
+  color: #339bcb;
+}
+.inbox-tabbar-default i {
+  font-size: 32px;
+}
+
+.inbox-tabbar-default div {
+  font-size: 12px;
+}
+
+
+
+/* Messages */
+
+
+.message-text-default {
+  padding: 4px 8px;
+}
+
+.message-text-default span[data-replace-model="Profile"]{
+  font-weight: bold;
+}
+
+.message-text-default span.ago {
+  color: #999;
+}
+
+.message-text-default div.message-other-person {
+  font-size: 11px;
+}
+
+
+.msg-form-bg-surface {
+  border-top: 1px solid #dcdcdc;
+  background: #f8f8f8;
+}
+
+.message-byuser-container-default {
+  border-bottom: 1px solid #f8f8f8;
+}
+
+.message-byuser-container-default > div {
+  padding: 0 8px;
+}
+
+.message-byuser-container-default > div:first-child {
+  padding-top: 12px;
+}
+.message-byuser-container-default > div:last-child {
+  padding-bottom: 12px;
+}
+
+.message-byuser-container-default > div:nth-child(1) {
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 28px;
+}
+.message-byuser-container-default > div:nth-child(2) {
+  font-size: 12px;
+  color: #999;
+}
+
+.message-text-default {
+  text-align: right;
+  padding: 4px 8px;
+}
+.message-text-default.from_me {
+  text-align: left;
+}
+
+.message-text-default > div {
+
+  display: inline-block;
+  width: 90%;
+
+  color: white;
+  background: #206D9A;
+
+  border: 1px solid #eee;
+
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+
+}
+
+.message-text-default.from_me > div {
+  background: #9A191C;
+}
+
+.message-text-default > div > div:nth-child(1) {
+  font-size: 11px;
+  line-height: 14px;
+  padding: 4px 4px 0;
+}
+
+.message-text-default > div > div:nth-child(2) {
+  font-size: 16px;
+  line-height: 20px;
+  padding: 0 4px 4px;
+}
+
+
+/* Message form */
+
+input[type="text"].msg-textinput-smaller {
+  line-height: 50px;
+  border: 1px solid #ddd;
+  border: 0px;
+}
+
+input[type="submit"].msg-button-smaller {
+  line-height: 50px;
+}
+
+
+
+/* List of Contacts */
+
+.contact-list-item-default {
+  line-height: 44px;
+  background: white;
+
+  padding: 0px 8px;
+
+  border-bottom: 1px dashed #ddd;
+}
+
+.contact-list-item-default > div:nth-child(1) {
+  font-size: 36px;
+  line-height: 36px;
+  color: #333;
+
+  padding-top: 10px;
+}
+
+.contact-list-item-default > div:nth-child(2) {
+  font-size: 16px;
+  line-height: 18px;
+  color: #333;
+  padding-left: 4px;
+}
+
+
+/* Settings */
+
+.settings-list-item {
+  /*color: white;*/
+  line-height: 32px;
+  font-size: 24px;
+  padding: 20px 8px;
+  /*border-bottom: 1px solid #ddd;*/
+  /*background-color: white;*/
+  /*background: rgba(255,255,255,0.2);*/
+}
+
+.settings-list-item i {
+  padding: 0 0 0 8px;
+  display: inline-block;
+  width: 24px;
+}
+
+.settings-list-item > div:last-child {
+  font-size: 14px;
+}
+.settings-list-item > div:first-child {
+  font-size: 18px;
+}
+
+.settings-button {
+  padding: 20px 8px;
+}
+
+
+
