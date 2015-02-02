@@ -166,9 +166,9 @@ define(function(require, exports, module) {
                 direction: 1,
                 ratios: [true, 1],
                 sequenceFrom: [{
+                    plane: [null,10],
                     surface: {
                         key: 'NextSearch',
-                        plane: [null,10],
                         surface: new Surface({
                             content: 'Tap to Choose Model',
                             wrap: '<div></div>',
