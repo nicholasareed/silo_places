@@ -204,7 +204,7 @@ define(function(require, exports, module) {
                 // - code
 
                 if(!data.version){
-                    Utils.Notification.Toast('Sorry, this does not seem to be a valid invite barcode');
+                    Utils.Notification.Toast('Invalid Barcode, No Version');
                     return;
                 }
 
@@ -220,9 +220,10 @@ define(function(require, exports, module) {
                     success: function(response){
                         console.log(response);
                         if(response.code != 200){
-                            alert('failed in code');
+                            Utils.Notification.Toast('Failed Creating Connection');
                         } else {
-                            alert('ok');
+                            // alert('ok');
+                            Utils.Notification.Toast('Connection Created');
                         }
                     }
                 })
