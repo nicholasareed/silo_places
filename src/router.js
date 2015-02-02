@@ -166,6 +166,16 @@ define(function(require, exports, module) {
                     defaultRoute('UserView', 'User/View', arguments);
                 },
 
+                'data/list' : function(){
+
+                    App.Views.MainFooter.route_show = true;
+                    App.Views.MainFooter.Tabs.select('data', false);
+
+                    defaultRoute('DataList', 'Data/List', arguments, {cache: true});
+
+                },
+
+
                 'friend/list' : function(){
 
                     App.Views.MainFooter.route_show = true;

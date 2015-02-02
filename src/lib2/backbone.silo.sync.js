@@ -120,6 +120,10 @@
             // console.log('options');
             // console.log(options);
 
+            if(!App.Cache.Patching){
+                App.Cache.Patching = {};
+            }
+
             var dfd = $.Deferred();
 
             options || (options = {});
@@ -240,8 +244,9 @@
 
 
                     // Get token hash for this query
-                    var token = Utils.base64.encode(JSON.stringify(data));
-                    if(App.Cache.Patching[token] != undefined){
+                    var token = Utils.Base64.encode(JSON.stringify(data));
+                    console.log(App.Cache);
+                    if(App.Cache.Patching && App.Cache.Patching[token] != undefined){
                         data.hash = App.Cache.Patching[token].hash;
                     }
 
@@ -466,6 +471,10 @@
 
             options || (options = {});
 
+            if(!App.Cache.Patching){
+                App.Cache.Patching = {};
+            }
+
             switch (method) {
                 case 'create':
                     console.log('creating collection');
@@ -521,7 +530,7 @@
                     //     // no hash exists
                     // }
 
-                    var modelName = model.__proto__.model.prototype.modelName;
+                    var modelName = model.modelName || model.__proto__.model.prototype.modelName;
                     var data = {
                         model: modelName,
                         conditions: this.search_conditions,
@@ -538,7 +547,7 @@
                     _.extend(data, options.data);
 
                     // Get token hash for this query
-                    var token = Utils.base64.encode(JSON.stringify(data));
+                    var token = Utils.Base64.encode(JSON.stringify(data));
                     if(App.Cache.Patching[token] != undefined){
                         data.hash = App.Cache.Patching[token].hash;
                     }

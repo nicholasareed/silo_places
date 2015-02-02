@@ -524,14 +524,14 @@ define(function(require, exports, module) {
         });
         tmp.Views = [];
 
-        options.sequenceFrom = options.Views; // alias
+        options.sequenceFrom = options.sequenceFrom || options.Views; // alias
 
         // sequenceFrom
         this.defaultSequenceFrom(options, tmp, true); // isRenderController=true
 
         // Default to select?
         if(options.default){
-            var viewToShow = options.default();
+            var viewToShow = options.default(tmp);
             if(viewToShow){
                 // Timer.setTimeout(function(){
                     tmp.show(viewToShow);

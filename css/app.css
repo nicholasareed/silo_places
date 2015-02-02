@@ -103,6 +103,49 @@
 
 
 
+/* Data Explorer */
+
+.data-explorer-next-search {
+  padding: 4px;
+}
+
+.data-explorer-next-search div {
+  
+  padding: 8px;
+
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+
+  -webkit-box-shadow: 0px 4px 10px -5px rgba(0,0,0,0.75);
+  box-shadow: 0px 4px 10px -5px rgba(0,0,0,0.75);
+
+}
+
+.data-explorer-current-search {
+  background: #efefef;
+}
+
+.data-explorer-waiting-data {
+  line-height: 80px;
+  text-align: center;
+}
+
+.data-item-default {
+  padding: 8px;
+}
+
+.data-item-default div {
+
+  padding: 8px;
+
+  background: #F8F8F8;
+  border: 1px solid #ddd;
+
+  -webkit-box-shadow: 0px 4px 10px -5px rgba(0,0,0,0.75);
+  box-shadow: 0px 4px 10px -5px rgba(0,0,0,0.75);
+}
+
+
 
 
 /* Payment Recipient  - debit card and bank list */

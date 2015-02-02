@@ -117,7 +117,7 @@ define(function(require, exports, module) {
 
         // Sign Up button
         this.signupButton = new Surface({
-            content: '<div class="lifted">Login with Silo</div>',
+            content: '<div class="lifted">Login with your Host</div>',
             size: [Utils.WindowWidth(), 60],
             classes: ['landing-button','silo-button']
         });

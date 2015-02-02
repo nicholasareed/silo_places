@@ -23,6 +23,18 @@ define(function (require) {
             //     cacheResponse: false
             // }),
 
+            model_list: function(queryOptions){
+
+                return Api.query('/api/model_list',queryOptions);
+
+            },
+
+            connection_create: function(queryOptions){
+
+                return Api.query('/api/connection_create',queryOptions);
+
+            },
+
             search: function(queryOptions, cacheOptions){
                 // Gather multiple requests in a 100ms window into a single request
                 // - needs to be really quick at switching?
@@ -403,11 +415,11 @@ define(function (require) {
                     // // Continue with response
                     // // - should be using context or .apply(this...) ?
                     // // console.error(queryOptionsBase);
-                    // queryOptionsBase.error.call(this,response);
+                    queryOptionsBase.error.call(this,response);
 
-                    // Re-try query
-                    console.error('Failed query, trying again');
-                    return Api.query(inputUrl,inputQueryOptions);
+                    // // Re-try query
+                    // console.error('Failed query, trying again');
+                    // return Api.query(inputUrl,inputQueryOptions);
                 };
 
                 // // Check online status
@@ -431,10 +443,15 @@ define(function (require) {
 
                 queryOptions.data = JSON.stringify(queryOptions.data);
                 
+                // remove trailing slash when creating full url
+                var baseApiUrl = App.Credentials.base_api_url;
+                if(baseApiUrl.substr(-1) == '/'){
+                    baseApiUrl = baseApiUrl.substr(0,baseApiUrl.length - 1);
+                }
                 if(url == '/api/search'){
-                    url = App.Credentials.base_api_url + url;
+                    url = baseApiUrl + url;
                 } else {
-                    url = App.Credentials.base_api_url + url;
+                    url = baseApiUrl + url;
                 }
 
                 var ajaxOptions = $.extend(Api.defaults, {url: url});

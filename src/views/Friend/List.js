@@ -38,21 +38,11 @@ define(function(require, exports, module) {
     var Credentials         = JSON.parse(require('text!credentials.json'));
     var numeral = require('lib2/numeral.min');
 
-    // // Side menu of options
-    // var GameMenuView      = require('views/Game/GameMenu');
-
-    // Notifications SubView
+    // Subview
     var ConnectedView      = require('./Subviews/Connected');
-    var RecommendedView      = require('./Subviews/Connected');
-    var EmailOnlyListView      = require('./Subviews/Connected');
-    // var PotentialView      = require('./Subviews/Potential');
-    // var IncomingView      = require('./Subviews/Incoming');
-    // var OutgoingView      = require('./Subviews/Outgoing');
     
     // Models
-    var MediaModel = require('models/media');
-    var FriendModel = require('models/friend');
-    var RelationshipCodeModel = require('models/relationship_code');
+    var ConnectionModel = require('models/connection');
 
     function PageView(params) {
         var that = this;

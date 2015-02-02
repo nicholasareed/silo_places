@@ -167,6 +167,7 @@ define(function(require, exports, module) {
     App = {
         $: $,
         t: null, // for translation
+        Api: Api,
         Utils: Utils,
         Flags: {},
         Functions: {}, // some global functions, like for Splash
@@ -452,8 +453,13 @@ define(function(require, exports, module) {
                 App.Views.MainFooter.Tabs = new StandardTabBar();  
                 var tmpTabs = App.Views.MainFooter.Tabs;
 
-                tmpTabs.defineSection('home', {
-                    content: '<i class="icon ion-home"></i><div><span class="ellipsis-all">'+App.t('footer.waiting')+'</span></div>',
+                // tmpTabs.defineSection('home', {
+                //     content: '<i class="icon ion-home"></i><div><span class="ellipsis-all">'+App.t('footer.waiting')+'</span></div>',
+                //     onClasses: ['footer-tabbar-default', 'on'],
+                //     offClasses: ['footer-tabbar-default', 'off']
+                // });
+                tmpTabs.defineSection('data', {
+                    content: '<i class="icon ion-person-stalker"></i><div><span class="ellipsis-all">Data</span></div>',
                     onClasses: ['footer-tabbar-default', 'on'],
                     offClasses: ['footer-tabbar-default', 'off']
                 });
@@ -467,11 +473,11 @@ define(function(require, exports, module) {
                     onClasses: ['footer-tabbar-default', 'on'],
                     offClasses: ['footer-tabbar-default', 'off']
                 });
-                tmpTabs.defineSection('friends', {
-                    content: '<i class="icon ion-person-stalker"></i><div><span class="ellipsis-all">'+App.t('footer.friends')+'</span></div>',
-                    onClasses: ['footer-tabbar-default', 'on'],
-                    offClasses: ['footer-tabbar-default', 'off']
-                });
+                // tmpTabs.defineSection('friends', {
+                //     content: '<i class="icon ion-person-stalker"></i><div><span class="ellipsis-all">'+App.t('footer.friends')+'</span></div>',
+                //     onClasses: ['footer-tabbar-default', 'on'],
+                //     offClasses: ['footer-tabbar-default', 'off']
+                // });
 
 
 
@@ -505,6 +511,10 @@ define(function(require, exports, module) {
 
                         case 'friends':
                             App.history.navigate('friend/list');
+                            break;
+
+                        case 'data':
+                            App.history.navigate('data/list');
                             break;
 
                         default:

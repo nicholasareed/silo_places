@@ -74,6 +74,7 @@ define(function (require) {
             init: function(){
                 // Initialize the Firebase connection
                 // - not authenticating
+                debugger;
                 App.Websocket = new Firebase(App.Credentials.firebase_url);
             },
 
