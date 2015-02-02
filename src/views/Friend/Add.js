@@ -169,8 +169,12 @@ define(function(require, exports, module) {
     PageView.prototype.scan_barcode = function(ev){
         var that = this;
 
+        this.in_scanner = true;
+
         cordova.plugins.barcodeScanner.scan(
             function (result) {
+                that.in_scanner = false;
+
                 if(result.cancelled){
                     return false;
                 }
@@ -220,6 +224,7 @@ define(function(require, exports, module) {
 
             }, 
             function (error) {
+                that.in_scanner = false;
                 Utils.Notification.Toast("Scanning failed: " + error);
             }
         );
@@ -236,6 +241,13 @@ define(function(require, exports, module) {
         var that = this;
         console.log('RemoteRefresh - PageView');
         Utils.RemoteRefresh(this,snapshot);
+    };
+
+    PageView.prototype.backbuttonHandler = function(snapshot){
+        if(this.in_scanner){
+            return;
+        }
+        App.history.back();
     };
 
     PageView.prototype.inOutTransition = function(direction, otherViewName, transitionOptions, delayShowing, otherView, goingBack){
