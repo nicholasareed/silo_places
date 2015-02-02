@@ -79,7 +79,7 @@
 
     <gap:plugin name="com.danielcwilson.plugins.googleanalytics" version="0.6.1" source="plugins.cordova.io" />
 
-    <gap:plugin name="nl.x-services.plugins.googleplus" version="1.0.8" source="plugins.cordova.io"/>
+    <!-- <gap:plugin name="nl.x-services.plugins.googleplus" version="1.0.8" source="plugins.cordova.io"/> -->
 
     <!-- <gap:plugin name="nickreed.com.phonegap.plugins.facebookconnect" version="0.9.1" source="plugins.cordova.io">
         <param name="APP_ID" value="1576585215910001" />
