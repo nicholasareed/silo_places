@@ -179,7 +179,7 @@ define(function(require, exports, module) {
                 
                 Timer.setTimeout(function(){
                     that.in_scanner = false;
-                },1000);
+                },250);
 
                 if(result.cancelled){
                     return false;
@@ -232,7 +232,7 @@ define(function(require, exports, module) {
             function (error) {
                 Timer.setTimeout(function(){
                     that.in_scanner = false;
-                },1000);
+                },250);
                 Utils.Notification.Toast("Scanning failed: " + error);
             }
         );
@@ -252,7 +252,6 @@ define(function(require, exports, module) {
     };
 
     PageView.prototype.backbuttonHandler = function(snapshot){
-        Utils.Notification.Toast(JSON.stringify(this.in_scanner));
         if(this.in_scanner){
             return;
         }
