@@ -224,7 +224,7 @@ define(function(require, exports, module) {
 
             }, 
             function (error) {
-                that.in_scanner = false;
+                // that.in_scanner = false;
                 Utils.Notification.Toast("Scanning failed: " + error);
             }
         );
@@ -244,6 +244,7 @@ define(function(require, exports, module) {
     };
 
     PageView.prototype.backbuttonHandler = function(snapshot){
+        Utils.Notification.Toast(JSON.stringify(this.in_scanner));
         if(this.in_scanner){
             return;
         }
