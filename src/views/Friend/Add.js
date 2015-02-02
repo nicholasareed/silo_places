@@ -119,9 +119,12 @@ define(function(require, exports, module) {
                         events: function(surface){
                             surface.on('deploy', function(){
                                 var myDetails = {
-                                    name: 'Otheruser',
-                                    user_id: '5246a948-c2c3-45d8-a74e-023cb682c83b',
-                                    user_server: App.Credentials.base_api_url
+                                    version: '0.1.0',
+                                    values: {
+                                        name: 'Otheruser',
+                                        user_id: '5246a948-c2c3-45d8-a74e-023cb682c83b',
+                                        user_server: App.Credentials.base_api_url
+                                    }
                                 }
                                 console.log(myDetails);
                                 $('#qrcode').empty().qrcode({width: 200,height: 200,text: JSON.stringify(myDetails)});
@@ -173,7 +176,10 @@ define(function(require, exports, module) {
 
         cordova.plugins.barcodeScanner.scan(
             function (result) {
-                that.in_scanner = false;
+                
+                Timer.setTimeout(function(){
+                    that.in_scanner = false;
+                },1000);
 
                 if(result.cancelled){
                     return false;
@@ -193,7 +199,7 @@ define(function(require, exports, module) {
                     return;
                 }
 
-                // Expecting "v" and "c" keys
+                // Expecting "version" and "values" keys
                 // - version
                 // - code
 
@@ -224,7 +230,9 @@ define(function(require, exports, module) {
 
             }, 
             function (error) {
-                // that.in_scanner = false;
+                Timer.setTimeout(function(){
+                    that.in_scanner = false;
+                },1000);
                 Utils.Notification.Toast("Scanning failed: " + error);
             }
         );
