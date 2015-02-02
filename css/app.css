@@ -145,6 +145,23 @@
   box-shadow: 0px 4px 10px -5px rgba(0,0,0,0.75);
 }
 
+.connection-create-qrcode-holder {
+  text-align: center;
+}
+
+.connection-create-qrcode-holder div {
+  /*display: inline-block;*/
+}
+
+.connection-create-spacer {
+
+}
+
+.connection-create-spacer div {
+  height: 1px;
+  border-top: 1px solid #ddd;
+}
+
 
 
 

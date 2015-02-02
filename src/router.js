@@ -185,6 +185,9 @@ define(function(require, exports, module) {
 
                 },
                 'friend/add' : function(){
+                    defaultRoute('FriendAdd', 'Friend/Add', arguments, {cache: true});
+                },
+                'friend/invite' : function(){
                     defaultRoute('FriendInvite', 'Friend/LocalInvite', arguments, {cache: true});
                 },
 

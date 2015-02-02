@@ -29,21 +29,14 @@ define(function(require, exports, module) {
     var NavigationBar = require('famous/widgets/NavigationBar');
     var GridLayout = require("famous/views/GridLayout");
 
-    // Subviews
-    var StandardHeader = require('views/common/StandardHeader');
     var LayoutBuilder = require('views/common/LayoutBuilder');
+    var StandardHeader = require('views/common/StandardHeader');
 
     require('views/common/ScrollviewGoto');
 
     // Extras
     var Credentials         = JSON.parse(require('text!credentials.json'));
     var numeral = require('lib2/numeral.min');
-
-    // Subview
-    var ItemsView      = require('./Subviews/Items');
-    
-    // Models
-    var AnyModel = require('models/any');
 
     function PageView(params) {
         var that = this;
@@ -62,10 +55,7 @@ define(function(require, exports, module) {
 
         this._subviews = [];
 
-        // Wait for User to be resolved
-        // App.Data.User.populated().then((function(){
-            this.createContent();
-        // }).bind(this));
+        this.createContent();
 
         this.add(this.layout);
 
@@ -78,35 +68,14 @@ define(function(require, exports, module) {
         var that = this;
         
         // Icons
-        this.headerContent = {};
-
-        // quick invite
-        this.headerContent.QuickInvite = new Surface({
-            content: '<i class="icon ion-person-add"></i>',
-            size: [60, undefined],
-            classes: ['header-tab-icon-text-big']
-        });
-        this.headerContent.QuickInvite.on('longtap', function(){
-            Utils.Help('Data/List/Connection');
-        });
-        this.headerContent.QuickInvite.on('click', function(){
-            // Invite somebody
-            // - manually enter data or scan a barcode, nfc, etc. 
-
-            App.history.navigate('friend/add');
-            return;
-
-        });
+        this.headerContent = new View();
 
         // create the header
         this.header = new StandardHeader({
-            content: "Data Explorer",
+            content: "Create Connection",
             classes: ["normal-header"],
             backClasses: ["normal-header"],
-            backContent: false,
-            moreSurfaces: [
-                this.headerContent.QuickInvite
-            ]
+            moreContent: false
         });
         this.header._eventOutput.on('back',function(){
             App.history.back();
@@ -127,88 +96,135 @@ define(function(require, exports, module) {
     PageView.prototype.createContent = function(){
         var that = this;
 
-        this.content = new LayoutBuilder({
+
+        this.contentLayout = new LayoutBuilder({
             size: [undefined, undefined],
             flexible: {
-                key: 'ListHolder',
                 direction: 1,
-                ratios: [true, 1],
+                ratios: [1,true,1],
                 sequenceFrom: [{
-                    plane: [null,10],
                     surface: {
-                        key: 'NextSearch',
+                        key: 'QrCode',
+                        mods: [{
+                            size: [undefined, undefined]
+                        },"sizer",{
+                            origin: [0.5,0.5],
+                            align: [0.5,0.5]
+                        }],
                         surface: new Surface({
-                            content: 'Tap to Choose Model',
-                            wrap: '<div></div>',
-                            size: [undefined, true],
-                            classes: ['data-explorer-next-search']
+                            content: '<div id="qrcode"></div>',
+                            size: [true, true],
+                            classes: ['connection-create-qrcode-holder']
                         }),
-                        click: function(){
-                            Utils.Notification.Toast('Loading Models');
-                            App.Api.model_list({
-                                success: function(modelsResult){
-                                    var list = _.map(modelsResult.data, function(r){
-                                        return {
-                                            text: r,
-                                            success: function(item){
-                                                // Create new subview
-                                                var ItemSubview = new ItemsView({
-                                                    modelName: item.text
-                                                });
-                                                that.content.ListHolder.NextSearch.setContent('Searched: ' + item.text);
-                                                that.content.ListHolder.Cards.show(ItemSubview);
-                                            }
-                                        };
-                                    });
-                                    Utils.Popover.List({
-                                        list: list
-                                    });
+                        events: function(surface){
+                            surface.on('deploy', function(){
+                                var myDetails = {
+                                    name: 'Otheruser',
+                                    user_id: '5246a948-c2c3-45d8-a74e-023cb682c83b',
+                                    user_server: App.Credentials.base_api_url
                                 }
+                                console.log(myDetails);
+                                $('#qrcode').empty().qrcode({width: 200,height: 200,text: JSON.stringify(myDetails)});
                             });
-
                         }
                     }
-                },
-                // {
-                //     surface: {
-                //         key: 'CurrentSearch',
-                //         surface: new Surface({
-                //             content: 'Searched for "Connections"',
-                //             size: [undefined, 80],
-                //             classes: ['data-explorer-current-search']
-                //         })
-                //     }
-                // },
-                {
-                    controller: {
-                        key: 'Cards',
-                        sequenceFrom: [{
-                            surface: {
-                                key: 'NoDataLoaded',
-                                surface: new Surface({
-                                    content: 'Waiting on data',
-                                    size: [undefined, true],
-                                    classes: ['data-explorer-waiting-data']
-                                })
-                            }
+                },{
+                    surface: {
+                        surface: new Surface({
+                            content: '',
+                            wrap: '<div></div>',
+                            size: [undefined, true],
+                            classes: ['connection-create-spacer']
+                        })
+                    }
+                },{
+                    surface: {
+                        key: 'ScanButton',
+                        mods: [{
+                            size: [undefined, undefined]
+                        },"sizer",{
+                            origin: [0.5,0.5],
+                            align: [0.5,0.5]
                         }],
-                        default: function(controller){
-                            return controller.NoDataLoaded;
-
-                            // Timer.setTimeout(function(){
-                            //     console.log(controller);
-                            //     debugger;
-                            //     // that.content.ListHolder.Cards.show();
-                            // },16);
-                        }
-
+                        surface: new Surface({
+                            content: 'Scan QR Code',
+                            wrap: '<div class="lifted"></div>',
+                            size: [undefined, true],
+                            classes: ['landing-button','silo-button']
+                        }),
+                        click: that.scan_barcode.bind(that)
                     }
                 }]
             }
         });
 
-        this.layout.content.add(this.content);
+        // Content Modifier
+        this.ContentStateModifier = new StateModifier();
 
+
+        this.layout.content.add(this.ContentStateModifier).add(this.contentLayout);
+
+    };
+
+    PageView.prototype.scan_barcode = function(ev){
+        var that = this;
+
+        cordova.plugins.barcodeScanner.scan(
+            function (result) {
+                if(result.cancelled){
+                    return false;
+                }
+
+                // Got a result
+
+                // Try and parse it as JSON (that is what we are expecting)
+                try {
+                    var data = JSON.parse(result.text);
+                    if(typeof data != typeof({})){
+                        throw "Failed 'data' type";
+                    }
+                } catch(err){
+                    // Failed reading the code
+                    Utils.Notification.Toast('Invalid Barcode');
+                    return;
+                }
+
+                // Expecting "v" and "c" keys
+                // - version
+                // - code
+
+                if(!data.version){
+                    Utils.Notification.Toast('Sorry, this does not seem to be a valid invite barcode');
+                    return;
+                }
+
+
+                console.log('Making request via api');
+
+                App.Api.connection_create({
+                    data: data.values,
+                    error: function(err){
+                        console.error('Failed!!!');
+                        console.error(err);
+                    },
+                    success: function(response){
+                        console.log(response);
+                        if(response.code != 200){
+                            alert('failed in code');
+                        } else {
+                            alert('ok');
+                        }
+                    }
+                })
+
+
+            }, 
+            function (error) {
+                Utils.Notification.Toast("Scanning failed: " + error);
+            }
+        );
+
+        return false;
     };
 
     PageView.prototype.refreshData = function() {
@@ -245,7 +261,7 @@ define(function(require, exports, module) {
 
                         Timer.setTimeout(function(){
 
-                            // that.ContentStateModifier.setTransform(Transform.translate((window.innerWidth * (goingBack ? 1.5 : -1.5)),0,0), transitionOptions.outTransition);
+                            that.ContentStateModifier.setTransform(Transform.translate((window.innerWidth * (goingBack ? 1.5 : -1.5)),0,0), transitionOptions.outTransition);
 
                         }, delayShowing);
 
@@ -268,14 +284,14 @@ define(function(require, exports, module) {
                         transitionOptions.inTransform = Transform.identity;
 
 
-                        // that.ContentStateModifier.setTransform(Transform.translate((window.innerWidth * (goingBack ? -1.5 : 1.5)),0,0));
+                        that.ContentStateModifier.setTransform(Transform.translate((window.innerWidth * (goingBack ? -1.5 : 1.5)),0,0));
 
                         // Content
                         // - extra delay
                         Timer.setTimeout(function(){
 
-                            // // Bring content back
-                            // that.ContentStateModifier.setTransform(Transform.translate(0,0,0), transitionOptions.inTransition);
+                            // Bring content back
+                            that.ContentStateModifier.setTransform(Transform.translate(0,0,0), transitionOptions.inTransition);
 
                         }, delayShowing + transitionOptions.outTransition.duration);
 
