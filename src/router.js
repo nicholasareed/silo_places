@@ -197,10 +197,16 @@ define(function(require, exports, module) {
                     defaultRoute('AddThings', 'Misc/AddThings', arguments, {cache: false});
                 },
 
+                'inbox/:user_id' : function(){
+                    App.Views.MainFooter.route_show = true;
+                    App.Views.MainFooter.Tabs.select('messages', false);
+                    defaultRoute('Conversation', 'Message/Conversation', arguments);
+                },
+
                 'inbox' : function(){
                     App.Views.MainFooter.route_show = true;
                     App.Views.MainFooter.Tabs.select('messages', false);
-                    defaultRoute('Inbox', 'Message/Inbox', arguments);
+                    defaultRoute('Inbox', 'Message/UserList', arguments);
                 },
 
                 'message/add/media(/:hash)' : function(){

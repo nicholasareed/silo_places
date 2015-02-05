@@ -165,6 +165,38 @@
 
 
 
+
+
+/* Conversations / Inbox / Messages */
+
+.conversation-message-default {
+  padding: 8px;
+}
+
+.conversation-message-default div {
+
+  padding: 8px;
+
+  background: #F8F8F8;
+  border: 1px solid #ddd;
+
+  -webkit-box-shadow: 0px 4px 10px -5px rgba(0,0,0,0.75);
+  box-shadow: 0px 4px 10px -5px rgba(0,0,0,0.75);
+}
+
+.conversation-message-default span {
+  display:block;
+  line-height: 14px;
+  font-size: 11px;
+  color: #444;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+
+
+
+
 /* Payment Recipient  - debit card and bank list */
 
 .payment-recipient-list-item-default {

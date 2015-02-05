@@ -29,14 +29,21 @@ define(function(require, exports, module) {
     var NavigationBar = require('famous/widgets/NavigationBar');
     var GridLayout = require("famous/views/GridLayout");
 
-    var LayoutBuilder = require('views/common/LayoutBuilder');
+    // Subviews
     var StandardHeader = require('views/common/StandardHeader');
+    var LayoutBuilder = require('views/common/LayoutBuilder');
 
     require('views/common/ScrollviewGoto');
 
     // Extras
     var Credentials         = JSON.parse(require('text!credentials.json'));
     var numeral = require('lib2/numeral.min');
+
+    // Subview
+    var UsersView      = require('./Subviews/Users');
+    
+    // Models
+    var AnyModel = require('models/any');
 
     function PageView(params) {
         var that = this;
@@ -55,7 +62,10 @@ define(function(require, exports, module) {
 
         this._subviews = [];
 
-        this.createContent();
+        // Wait for User to be resolved
+        // App.Data.User.populated().then((function(){
+            this.createContent();
+        // }).bind(this));
 
         this.add(this.layout);
 
@@ -68,14 +78,36 @@ define(function(require, exports, module) {
         var that = this;
         
         // Icons
-        this.headerContent = new View();
+        this.headerContent = {};
+
+        // quick invite
+        this.headerContent.QuickInvite = new Surface({
+            content: '<i class="icon ion-person-add"></i>',
+            size: [60, undefined],
+            classes: ['header-tab-icon-text-big']
+        });
+        this.headerContent.QuickInvite.on('longtap', function(){
+            Utils.Help('Data/List/Connection');
+        });
+        this.headerContent.QuickInvite.on('click', function(){
+            // Invite somebody
+            // - manually enter data or scan a barcode, nfc, etc. 
+
+            App.history.navigate('friend/add');
+            return;
+
+        });
 
         // create the header
         this.header = new StandardHeader({
-            content: "Create Connection",
+            content: "Inbox",
             classes: ["normal-header"],
             backClasses: ["normal-header"],
+            backContent: false,
             moreContent: false
+            // moreSurfaces: [
+            //     this.headerContent.QuickInvite
+            // ]
         });
         this.header._eventOutput.on('back',function(){
             App.history.back();
@@ -96,148 +128,64 @@ define(function(require, exports, module) {
     PageView.prototype.createContent = function(){
         var that = this;
 
-
-        this.contentLayout = new LayoutBuilder({
+        this.content = new LayoutBuilder({
             size: [undefined, undefined],
             flexible: {
+                key: 'ListHolder',
                 direction: 1,
-                ratios: [1,true,1],
+                ratios: [true, 1],
                 sequenceFrom: [{
+                    plane: [null,10],
                     surface: {
-                        key: 'QrCode',
-                        mods: [{
-                            size: [undefined, undefined]
-                        },"sizer",{
-                            origin: [0.5,0.5],
-                            align: [0.5,0.5]
-                        }],
+                        key: 'Information',
                         surface: new Surface({
-                            content: '<div id="qrcode"></div>',
-                            size: [true, true],
-                            classes: ['connection-create-qrcode-holder']
-                        }),
-                        events: function(surface){
-                            surface.on('deploy', function(){
-                                var myDetails = {
-                                    version: '0.1.0',
-                                    values: {
-                                        name: 'Otheruser',
-                                        user_id: '5246a948-c2c3-45d8-a74e-023cb682c83b',
-                                        user_server: App.Credentials.base_api_url
-                                    }
-                                }
-                                console.log(myDetails);
-                                $('#qrcode').empty().qrcode({width: 200,height: 200,text: JSON.stringify(myDetails)});
-                            });
-                        }
-                    }
-                },{
-                    surface: {
-                        surface: new Surface({
-                            content: '',
+                            content: 'Your conversations are listed below!',
                             wrap: '<div></div>',
                             size: [undefined, true],
-                            classes: ['connection-create-spacer']
+                            classes: ['data-explorer-next-search']
                         })
                     }
-                },{
-                    surface: {
-                        key: 'ScanButton',
-                        mods: [{
-                            size: [undefined, undefined]
-                        },"sizer",{
-                            origin: [0.5,0.5],
-                            align: [0.5,0.5]
+                },
+                {
+                    controller: {
+                        key: 'Users',
+                        sequenceFrom: [{
+                            surface: {
+                                key: 'NoDataLoaded',
+                                surface: new Surface({
+                                    content: 'Loading Conversations',
+                                    size: [undefined, true],
+                                    classes: ['data-explorer-waiting-data']
+                                })
+                            }
                         }],
-                        surface: new Surface({
-                            content: 'Scan QR Code',
-                            wrap: '<div class="lifted"></div>',
-                            size: [undefined, true],
-                            classes: ['landing-button','silo-button']
-                        }),
-                        click: that.scan_barcode.bind(that)
+                        events: function(){
+
+                            Timer.setTimeout(function(){
+                                // Create new subview
+                                var UsersSubview = new UsersView({
+                                    modelName: 'Connection'
+                                });
+                                that.content.ListHolder.Users.show(UsersSubview);
+                            },1);
+                        },
+                        default: function(controller){
+                            return controller.NoDataLoaded;
+
+                            // Timer.setTimeout(function(){
+                            //     console.log(controller);
+                            //     debugger;
+                            //     // that.content.ListHolder.Cards.show();
+                            // },16);
+                        }
+
                     }
                 }]
             }
         });
 
-        // Content Modifier
-        this.ContentStateModifier = new StateModifier();
+        this.layout.content.add(this.content);
 
-
-        this.layout.content.add(this.ContentStateModifier).add(this.contentLayout);
-
-    };
-
-    PageView.prototype.scan_barcode = function(ev){
-        var that = this;
-
-        this.in_scanner = true;
-
-        cordova.plugins.barcodeScanner.scan(
-            function (result) {
-                
-                Timer.setTimeout(function(){
-                    that.in_scanner = false;
-                },250);
-
-                if(result.cancelled){
-                    return false;
-                }
-
-                // Got a result
-
-                // Try and parse it as JSON (that is what we are expecting)
-                try {
-                    var data = JSON.parse(result.text);
-                    if(typeof data != typeof({})){
-                        throw "Failed 'data' type";
-                    }
-                } catch(err){
-                    // Failed reading the code
-                    Utils.Notification.Toast('Invalid Barcode');
-                    return;
-                }
-
-                // Expecting "version" and "values" keys
-                // - version
-                // - code
-
-                if(!data.version){
-                    Utils.Notification.Toast('Invalid Barcode, No Version');
-                    return;
-                }
-
-
-                console.log('Making request via api');
-
-                App.Api.connection_create({
-                    data: data.values,
-                    error: function(err){
-                        console.error('Failed!!!');
-                        console.error(err);
-                    },
-                    success: function(response){
-                        console.log(response);
-                        if(response.code != 200){
-                            Utils.Notification.Toast('Failed Creating Connection');
-                        } else {
-                            Utils.Notification.Toast('Connection Created');
-                        }
-                    }
-                })
-
-
-            }, 
-            function (error) {
-                Timer.setTimeout(function(){
-                    that.in_scanner = false;
-                },250);
-                Utils.Notification.Toast("Scanning failed: " + error);
-            }
-        );
-
-        return false;
     };
 
     PageView.prototype.refreshData = function() {
@@ -249,13 +197,6 @@ define(function(require, exports, module) {
         var that = this;
         console.log('RemoteRefresh - PageView');
         Utils.RemoteRefresh(this,snapshot);
-    };
-
-    PageView.prototype.backbuttonHandler = function(snapshot){
-        if(this.in_scanner){
-            return;
-        }
-        App.history.back();
     };
 
     PageView.prototype.inOutTransition = function(direction, otherViewName, transitionOptions, delayShowing, otherView, goingBack){
@@ -281,7 +222,7 @@ define(function(require, exports, module) {
 
                         Timer.setTimeout(function(){
 
-                            that.ContentStateModifier.setTransform(Transform.translate((window.innerWidth * (goingBack ? 1.5 : -1.5)),0,0), transitionOptions.outTransition);
+                            // that.ContentStateModifier.setTransform(Transform.translate((window.innerWidth * (goingBack ? 1.5 : -1.5)),0,0), transitionOptions.outTransition);
 
                         }, delayShowing);
 
@@ -304,14 +245,14 @@ define(function(require, exports, module) {
                         transitionOptions.inTransform = Transform.identity;
 
 
-                        that.ContentStateModifier.setTransform(Transform.translate((window.innerWidth * (goingBack ? -1.5 : 1.5)),0,0));
+                        // that.ContentStateModifier.setTransform(Transform.translate((window.innerWidth * (goingBack ? -1.5 : 1.5)),0,0));
 
                         // Content
                         // - extra delay
                         Timer.setTimeout(function(){
 
-                            // Bring content back
-                            that.ContentStateModifier.setTransform(Transform.translate(0,0,0), transitionOptions.inTransition);
+                            // // Bring content back
+                            // that.ContentStateModifier.setTransform(Transform.translate(0,0,0), transitionOptions.inTransition);
 
                         }, delayShowing + transitionOptions.outTransition.duration);
 
