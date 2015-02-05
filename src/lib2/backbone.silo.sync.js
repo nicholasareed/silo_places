@@ -131,12 +131,61 @@
             switch (method) {
                 case 'create':
                     console.log('creating model');
-                    debugger;
+                    console.log(method, model, options);
+
+                    var modelName = model.__proto__.modelName;
+                    var data = {
+                        model: modelName,
+                        obj: model.attributes
+                    };
+
+                    options.data = options.data || {}; // set default options data, and overwrite
+
+                    _.extend(data, options.data);
+
+                    Api.write({
+                        data: data,
+                        success: function(response){ // ajax arguments
+
+                            if(response.code != 200){
+                                console.log('=error');
+                                model._errLast = true;
+                                if(options.error) options.error(this,response);
+                                dfd.reject();
+                                return;
+                            }
+
+                            // Make sure there was one result updated
+                            if(!response.data._id){
+                                // Shoot!
+                                console.error('Failed creating a single');
+                                if(options.error) options.error(this,response);
+                                dfd.reject();
+                                return;
+                            }
+
+                            model.set('_id', response.data._id);
+
+                            // Return single value
+                            window.setTimeout(function(){
+
+                                // Resolve
+                                dfd.resolve(model.attributes);
+
+                                // Fire success function
+                                if(options.success){
+                                    options.success(model.attributes);
+                                }
+                            },1);
+                        
+                        }
+                    });
+
                     break;
 
                 case 'update':
                     console.log('updating model');
-                    // console.log(method, model, options);
+                    console.log(method, model, options);
 
                     // Get changed attributes and update those only
                     // var changed = model.changed

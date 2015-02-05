@@ -158,6 +158,13 @@ define(function (require) {
 
             },
 
+            event_proxy: function(queryOptions){
+                // This should more closely resemble api/event !!!
+
+                return Api.query('/api/event/proxy',queryOptions);
+
+            },
+
             event: function(queryOptions){
 
                 // Start listeners

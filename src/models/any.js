@@ -97,7 +97,7 @@ define(function (require, exports, module) {
 
                 search_conditions: {},
                 sort_conditions: {},
-                search_limit: 10,
+                search_limit: 100,
 
                 sync: Backbone.Collection.silo_sync,
 

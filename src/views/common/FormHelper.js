@@ -197,7 +197,10 @@ define(function(require, exports, module) {
 
         // Build Margins
         if(opts.margins){
-            var boxLayout = new BoxLayout({ margins: opts.margins });
+            var boxLayout = new BoxLayout({ 
+                margins: opts.margins,
+                middle: opts.marginsMiddle
+            });
             boxLayout.middleAdd(inputSurface);
             nextSurface = boxLayout;
         } else {

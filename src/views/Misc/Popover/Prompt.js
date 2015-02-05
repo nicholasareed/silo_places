@@ -224,6 +224,7 @@ define(function(require, exports, module) {
         this.inputText = new FormHelper({
 
             margins: [10,10],
+            marginsMiddle: true,
 
             form: this.form,
             name: 'input',
@@ -244,6 +245,7 @@ define(function(require, exports, module) {
             type: 'submit',
             value: this.params.passed.button,
             margins: [10,10],
+            marginsMiddle: true,
             click: function(){
 
                 var value = that.inputText.getValue();

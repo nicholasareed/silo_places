@@ -91,6 +91,9 @@ define(function(require, exports, module) {
                 }]
             }
         });
+        this.collection.comparator = function(modelVal){
+            return moment(modelVal.get('created')).unix();
+        };
 
         this.collection.on("sync", that.updateCollectionStatus.bind(this), this);
         this.collection.on("add", this.addOne, this);
@@ -149,6 +152,9 @@ define(function(require, exports, module) {
             size: [undefined, 50],
             classes: ['infinity-all-loaded-surface-default']
         });
+        this.infinityLoadedAllSurface.on('click', function(){
+            that.collection.fetch();
+        });
         this.infinityLoadedAllSurface.pipe(this._eventOutput);
 
         // Show more
@@ -201,7 +207,7 @@ define(function(require, exports, module) {
                     classes: ['conversation-message-default']
                 }),
                 click: function(){
-                    App.history.navigate('inbox/' + Model.get('_id'));
+                    // App.history.navigate('inbox/' + Model.get('_id'));
                 },
                 events: function(){
                     Timer.setTimeout(function(){
@@ -249,7 +255,7 @@ define(function(require, exports, module) {
         //     return v.Model.get('profile.name').toLowerCase();
         // });
 
-        // this.contentLayout.Views.push(this.lightboxButtons);
+        this.contentLayout.Views.push(this.lightboxButtons);
 
         console.log(this.contentLayout.Views);
 
