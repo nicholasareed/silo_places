@@ -43,7 +43,6 @@ define(function(require, exports, module) {
     var ItemsView      = require('./Subviews/Items');
     
     // Models
-    var AnyModel = require('models/any');
 
     function PageView(params) {
         var that = this;
@@ -169,16 +168,6 @@ define(function(require, exports, module) {
                         }
                     }
                 },
-                // {
-                //     surface: {
-                //         key: 'CurrentSearch',
-                //         surface: new Surface({
-                //             content: 'Searched for "Connections"',
-                //             size: [undefined, 80],
-                //             classes: ['data-explorer-current-search']
-                //         })
-                //     }
-                // },
                 {
                     controller: {
                         key: 'Cards',
@@ -186,7 +175,7 @@ define(function(require, exports, module) {
                             surface: {
                                 key: 'NoDataLoaded',
                                 surface: new Surface({
-                                    content: 'Waiting on data',
+                                    content: 'No Model Chosen',
                                     size: [undefined, true],
                                     classes: ['data-explorer-waiting-data']
                                 })

@@ -136,7 +136,7 @@
 
                 case 'update':
                     console.log('updating model');
-                    console.log(method, model, options);
+                    // console.log(method, model, options);
 
                     // Get changed attributes and update those only
                     // var changed = model.changed
@@ -192,7 +192,7 @@
                             }
 
                             // Make sure there was one result updated
-                            if(response.data != 1){
+                            if(response.data.n != 1){
                                 // Shoot!
                                 console.error('Failed updating a single');
                                 if(options.error) options.error(this,response);

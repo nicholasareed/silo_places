@@ -175,6 +175,15 @@ define(function(require, exports, module) {
 
                 },
 
+                'data/edit/:model/:id' : function(){
+
+                    App.Views.MainFooter.route_show = true;
+                    App.Views.MainFooter.Tabs.select('data', false);
+
+                    defaultRoute('DataEdit', 'Data/Edit', arguments, {cache: false});
+
+                },
+
 
                 'friend/list' : function(){
 

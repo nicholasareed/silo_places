@@ -40,9 +40,6 @@ define(function(require, exports, module) {
     var _ = require('underscore');
     var $ = require('jquery');
 
-    // // Models
-    // var PlayerModel = require('models/player');
-
     function PageView(params) {
         var that = this;
         View.apply(this, arguments);
@@ -68,6 +65,16 @@ define(function(require, exports, module) {
         this.createContent();
 
         this.add(Utils.usePlane('popover')).add(this.contentView);
+
+        // Focus on show
+        this._eventOutput.on('inOutTransition', function(args){
+            // 0 = direction
+            if(args[0] == 'showing'){
+                Timer.setTimeout(function(){
+                    that.inputText.Surface.focus();
+                },500);
+            }
+        });
 
     }
 
@@ -225,11 +232,11 @@ define(function(require, exports, module) {
             type: this.params.passed.type || 'text'
         });
         console.log(this.inputText);
-        this.inputText.Surface.on('deploy', function(){
-            Timer.setTimeout(function(){
-                that.inputText.Surface.focus();
-            },2000);
-        });
+        // this.inputText.Surface.on('deploy', function(){
+        //     Timer.setTimeout(function(){
+        //         that.inputText.Surface.focus();
+        //     },2000);
+        // });
 
 
         this.submitButton = new FormHelper({
@@ -470,7 +477,7 @@ define(function(require, exports, module) {
 
         var delay = 0;
 
-        // this._eventOutput.emit('inOutTransition', arguments);
+        this._eventOutput.emit('inOutTransition', arguments);
 
         switch(direction){
             case 'hiding':

@@ -22,6 +22,7 @@ define(function(require, exports, module) {
      * @param {string} [options.value] value of text
      */
     function TextAreaSurface(options) {
+        options = options || {};
         this._placeholder = options.placeholder || '';
         this._value       = options.value || '';
         this._type        = options.type || 'text';
@@ -108,8 +109,9 @@ define(function(require, exports, module) {
     TextAreaSurface.prototype.getValue = function getValue() {
         if (this._currTarget) {
             return this._currTarget.value;
-        }
-        else {
+        } else if(this._currentTarget){
+            return this._currentTarget.value;
+        } else {
             return this._value;
         }
     };

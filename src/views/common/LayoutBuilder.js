@@ -275,7 +275,26 @@ define(function(require, exports, module) {
             return endNode;
         }
 
-        var boxLayout = new BoxLayout({ margins: options.margins });
+        // Create the BoxLayout
+        // - "middle" is either undefined or true (true by default)
+        var boxLayout = new BoxLayout({ 
+            margins: options.margins, 
+            middle: options.marginsMiddle
+        });
+
+        // boxLayout.top.add(new Surface({
+        //     content: '',
+        //     properties: {
+        //         backgroundColor: 'purple'
+        //     }
+        // }));
+        // boxLayout.bottom.add(new Surface({
+        //     content: '',
+        //     properties: {
+        //         backgroundColor: 'blue'
+        //     }
+        // }));
+        
         boxLayout.middleAdd(endNode);
 
         return boxLayout;

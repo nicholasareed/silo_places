@@ -77,15 +77,18 @@ define(function(require, exports, module) {
 
         // App.Data.User contains friends
 
+        this.modelName = this.options.modelName;
+
         // Create collection of Games for 
         var options = {};
         // if(this.options && this.options.filter){
         //     options['$filter'] = this.options.filter;
         // }
-        this.collection = new AnyModel.AnyCollection([],{
+        var ThisModel = AnyModel(this.modelName);
+        this.collection = new ThisModel.Collection([],{
             
         });
-        this.collection.modelName = this.options.modelName;
+        // this.collection.modelName = this.options.modelName;
 
         this.collection.on("sync", that.updateCollectionStatus.bind(this), this);
         this.collection.on("add", this.addOne, this);
@@ -186,6 +189,9 @@ define(function(require, exports, module) {
                     size: [undefined, true],
                     classes: ['data-item-default']
                 }),
+                click: function(){
+                    App.history.navigate('data/edit/' + that.modelName + '/' + Model.get('_id'));
+                },
                 events: function(){
                     Timer.setTimeout(function(){
                         cardView.surface.pipe(that.contentLayout);

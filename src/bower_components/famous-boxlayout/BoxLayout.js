@@ -77,8 +77,11 @@ define(function (require, exports, module) {
         // create layout
         this.Layout = this._createLayout();
 
+        // Determine height based on options.middle
+        // - true: "get the actual height of the middle element and bind the height of the whole"
+        // - undefined/false: "make it expand fully"
         this.heightMod = new Modifier({
-            size: this.__getSize.bind(this)
+            size: this.options.middle ? this.__getSize.bind(this) : [undefined, undefined]
         });
     
         this.add(this.heightMod).add(this.Layout);
@@ -248,6 +251,7 @@ define(function (require, exports, module) {
         var that = this;
         var margins = this.margins;
         var middleSize = this.middleView.getSize(true) ? that.middleView.getSize(true)[1] : 0;
+        // console.log(middleSize);
         // if(this._dirty){
         //     this.horzLayout.setRatios(this.ratios);
         //     this._dirty = false;

@@ -9,6 +9,7 @@ define(function(require, exports, module) {
     var FlexibleLayout = require('famous/views/FlexibleLayout');
     var Surface = require('famous/core/Surface');
     var ImageSurface = require('famous/surfaces/ImageSurface');
+
     var Modifier = require('famous/core/Modifier');
     var StateModifier = require('famous/modifiers/StateModifier');
     var Transitionable     = require('famous/transitions/Transitionable');
@@ -32,18 +33,19 @@ define(function(require, exports, module) {
     // Subviews
     var StandardHeader = require('views/common/StandardHeader');
     var LayoutBuilder = require('views/common/LayoutBuilder');
+    var TextAreaSurface = require('views/common/TextAreaSurface');
 
-    require('views/common/ScrollviewGoto');
+    var beautify = require("lib2/jsbeautify").js_beautify;
 
     // Extras
     var Credentials         = JSON.parse(require('text!credentials.json'));
     var numeral = require('lib2/numeral.min');
 
     // Subview
-    var MessagesView      = require('./Subviews/Messages');
+    var ItemsView      = require('./Subviews/Items');
     
     // Models
-    var ConnectionModel = require('models/any')('Connection');
+    var AnyModel = require('models/any');
 
     function PageView(params) {
         var that = this;
@@ -51,7 +53,7 @@ define(function(require, exports, module) {
         this.params = params;
 
         this.loadModels();
-        
+
         // create the layout
         this.layout = new HeaderFooterLayout({
             headerSize: App.Defaults.Header.size,
@@ -75,22 +77,19 @@ define(function(require, exports, module) {
 
     PageView.prototype = Object.create(View.prototype);
     PageView.prototype.constructor = PageView;
-
+    
     PageView.prototype.loadModels = function(){
         var that = this;
 
-        this.connection_id = this.params.args[0];
+        this.modelName = this.params.args[0];
+        this.modelId = this.params.args[1];
 
-        // Load Connection
-        this.model = new ConnectionModel.Model({
-            _id: this.connection_id
+
+        var ThisModel = AnyModel(this.modelName);
+        this.model = new ThisModel.Model({
+            _id: this.modelId
         });
-        this.model.populated().then(function(){
-            // populated!
-            console.log(that.model.toJSON());
-            debugger;
-        });
-        // this.model.fetch();
+        this.model.fetch();
 
     };
     
@@ -100,62 +99,49 @@ define(function(require, exports, module) {
         // Icons
         this.headerContent = {};
 
-        // quick invite
-        this.headerContent.NewMessage = new Surface({
-            content: '<i class="icon ion-paper-airplane"></i>',
+        // Sve Edits
+        this.headerContent.SaveEdit = new Surface({
+            content: '<i class="icon ion-android-done"></i>',
             size: [60, undefined],
             classes: ['header-tab-icon-text-big']
         });
-        this.headerContent.NewMessage.on('longtap', function(){
+        this.headerContent.SaveEdit.on('longtap', function(){
             Utils.Help('Data/List/Connection');
         });
-        this.headerContent.NewMessage.on('click', function(){
+        this.headerContent.SaveEdit.on('click', function(){
             // Invite somebody
             // - manually enter data or scan a barcode, nfc, etc. 
 
+            var newData = that.content.flexible.TextArea.getValue();
+            console.log(newData);
 
-            Utils.Popover.Prompt('Message Text')
-            .then(function(messageText){
-                if(!messageText){
-                    return;
-                }
+            try {
+                newData = JSON.parse(newData);
+            }catch(err){
+                Utils.Notification.Toast('Invalid JSON');
+                console.error('Invalid JSON');
+                return;
+            }
 
-                // Write to the database this new Message
-                var newMessage = new AnyModel.Any({
-                    to_connection_id: that.connection_id,
-                    text: messageText
-                },{
-                    model: 'Message'
-                });
+            Utils.Notification.Toast('Updating...');
 
-                newMessage.save()
-                .fail(function(){
-                    console.error('Failed saving new Message');
-                    Utils.Popover.Alert('Failed saving new Message');
-                })
-                .then(function(response){
-                    // saved OK
-                    Utils.Notification.Toast('Saved new Message');
-                    console.log('response');
-                    console.log(response);
-
-                    // Refresh the messages
-                    // - should be auto-added? 
-                    that.MessagesSubview.collection.fetch();
-
-                });
-
+            // Save update
+            that.model.save(newData)
+            .then(function(){
+                console.log('Updated!');
+                Utils.Notification.Toast('Updated');
             });
 
         });
 
         // create the header
         this.header = new StandardHeader({
-            content: "Conversation",
+            content: "Edit Data",
             classes: ["normal-header"],
             backClasses: ["normal-header"],
+            // moreContent: false,
             moreSurfaces: [
-                this.headerContent.NewMessage
+                this.headerContent.SaveEdit
             ]
         });
         this.header._eventOutput.on('back',function(){
@@ -180,56 +166,33 @@ define(function(require, exports, module) {
         this.content = new LayoutBuilder({
             size: [undefined, undefined],
             flexible: {
-                key: 'ListHolder',
+                margins: [10,10,10,10],
+                marginsMiddle: undefined,
                 direction: 1,
                 ratios: [1],
-                sequenceFrom: [
-                // {
-                //     plane: [null,10],
-                //     surface: {
-                //         key: 'Information',
-                //         surface: new Surface({
-                //             content: 'Your conversations are listed below!',
-                //             wrap: '<div></div>',
-                //             size: [undefined, true],
-                //             classes: ['data-explorer-next-search']
-                //         })
-                //     }
-                // },
-                {
-                    controller: {
-                        key: 'Messages',
-                        sequenceFrom: [{
-                            surface: {
-                                key: 'NoDataLoaded',
-                                surface: new Surface({
-                                    content: 'Loading Conversations',
-                                    size: [undefined, true],
-                                    classes: ['data-explorer-waiting-data']
-                                })
-                            }
-                        }],
-                        events: function(){
-
-                            Timer.setTimeout(function(){
-                                // Create new subview
-                                var MessagesSubview = new MessagesView({
-                                    modelName: 'Message',
-                                    connection_id: that.connection_id
-                                });
-                                that.content.ListHolder.Messages.show(MessagesSubview);
-                            },1);
-                        },
-                        default: function(controller){
-                            return controller.NoDataLoaded;
-
-                            // Timer.setTimeout(function(){
-                            //     console.log(controller);
-                            //     debugger;
-                            //     // that.content.ListHolder.Cards.show();
-                            // },16);
+                sequenceFrom: [{
+                    surface: {
+                        key: 'TextArea',
+                        // margins: [10,10,10,10],
+                        // mods: [{
+                        //     size: function(){
+                        //         // console.log(that.content.flexible.getSize(true));
+                        //         console.log(that.content.flexible);
+                        //         return [undefined, undefined];
+                        //     }
+                        // }],
+                        surface: new TextAreaSurface({
+                            size: [undefined, undefined],
+                            classes: ['data-item-default']
+                        }),
+                        events: function(surface){
+                            that.model.populated().then(function(){
+                                // console.log(that.model.toJSON());
+                                var beau = beautify(JSON.stringify(that.model.toJSON()));
+                                console.log(beau);
+                                surface.setValue(beau);
+                            });
                         }
-
                     }
                 }]
             }

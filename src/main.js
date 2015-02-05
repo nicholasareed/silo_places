@@ -38,6 +38,8 @@ require.config({
         'backbone-adapter' : '../src/lib2/backbone-adapter',
         'jquery-adapter' : '../src/lib2/jquery-adapter',
 
+        // beautify : '../src/lib2/jsbeautify',
+
         inappbrowsercss: '../css/inappbrowser.css',
         inappbrowserjs: '../src/views/Misc/inappbrowser.js'
     },

@@ -43,7 +43,7 @@ define(function(require, exports, module) {
     var UsersView      = require('./Subviews/Users');
     
     // Models
-    var AnyModel = require('models/any');
+    var ConnectionModel = require('models/any')('Connection');
 
     function PageView(params) {
         var that = this;

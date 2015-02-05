@@ -32,7 +32,7 @@ define(function(require, exports, module) {
     var numeral = require('lib2/numeral.min');
 
     // Models
-    var AnyModel = require('models/any');
+    var ConnectionModel = require('models/any')('Connection');
 
     // // Templates
     // var Handlebars          = require('lib2/handlebars-adapter');
@@ -82,10 +82,12 @@ define(function(require, exports, module) {
         // if(this.options && this.options.filter){
         //     options['$filter'] = this.options.filter;
         // }
-        this.collection = new AnyModel.AnyCollection([],{
+        this.collection = new ConnectionModel.Collection([],{
             
         });
-        this.collection.modelName = this.options.modelName;
+        // console.log(this.collection);
+        // debugger;
+        // this.collection.modelName = this.options.modelName;
 
         this.collection.on("sync", that.updateCollectionStatus.bind(this), this);
         this.collection.on("add", this.addOne, this);
