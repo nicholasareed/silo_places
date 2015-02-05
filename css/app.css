@@ -145,6 +145,15 @@
   box-shadow: 0px 4px 10px -5px rgba(0,0,0,0.75);
 }
 
+.data-item-edit-default {
+  padding: 8px;
+
+  background: #F8F8F8;
+  
+  -webkit-box-shadow: 0px 4px 10px -5px rgba(0,0,0,0.75);
+  box-shadow: 0px 4px 10px -5px rgba(0,0,0,0.75);
+}
+
 .connection-create-qrcode-holder {
   text-align: center;
 }

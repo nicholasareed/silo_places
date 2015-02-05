@@ -183,7 +183,7 @@ define(function(require, exports, module) {
                         // }],
                         surface: new TextAreaSurface({
                             size: [undefined, undefined],
-                            classes: ['data-item-default']
+                            classes: ['data-item-edit-default']
                         }),
                         events: function(surface){
                             that.model.populated().then(function(){
