@@ -209,12 +209,13 @@ define(function(require, exports, module) {
                 click: function(){
                     // App.history.navigate('inbox/' + Model.get('_id'));
                 },
-                events: function(){
-                    Timer.setTimeout(function(){
-                        userView.surface.pipe(that.contentLayout);
-                        userView.surface.pipe(that._eventOutput);
-                    },1);
-                }
+                pipe: [that.contentLayout, that._eventOutput],
+                // events: function(){
+                //     Timer.setTimeout(function(){
+                //         userView.surface.pipe(that.contentLayout);
+                //         userView.surface.pipe(that._eventOutput);
+                //     },1);
+                // }
             }
         });
 

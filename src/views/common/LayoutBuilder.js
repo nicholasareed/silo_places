@@ -177,7 +177,13 @@ define(function(require, exports, module) {
         // More keys that can be triggered
         // - most used by surfaces (pipe, click, deploy, etc.)
         if(nodeOptions.pipe){
-            originalNode.pipe(nodeOptions.pipe);
+            if(typeof nodeOptions.pipe === typeof []){
+                nodeOptions.pipe.forEach(function(pipeTo){
+                    originalNode.pipe(pipeTo);
+                });
+            } else {
+                originalNode.pipe(nodeOptions.pipe);
+            }
         }
         if(nodeOptions.click){
             originalNode.on('click', nodeOptions.click);
