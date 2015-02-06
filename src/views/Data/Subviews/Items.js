@@ -192,12 +192,13 @@ define(function(require, exports, module) {
                 click: function(){
                     App.history.navigate('data/edit/' + that.modelName + '/' + Model.get('_id'));
                 },
-                events: function(){
-                    Timer.setTimeout(function(){
-                        cardView.surface.pipe(that.contentLayout);
-                        cardView.surface.pipe(that._eventOutput);
-                    },1);
-                }
+                pipe: [that.contentLayout, that._eventOutput]
+                // events: function(){
+                //     Timer.setTimeout(function(){
+                //         cardView.surface.pipe(that.contentLayout);
+                //         cardView.surface.pipe(that._eventOutput);
+                //     },1);
+                // }
             }
         });
 
