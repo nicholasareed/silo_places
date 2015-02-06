@@ -260,10 +260,10 @@ define(function(require, exports, module) {
 
         console.log(this.contentLayout.Views);
 
-        // Re-sequence?
-        Timer.setTimeout(function(){
-            that.contentLayout.sequenceFrom(that.contentLayout.Views);
-        },100);
+        // // Re-sequence?
+        // Timer.setTimeout(function(){
+        //     that.contentLayout.sequenceFrom(that.contentLayout.Views);
+        // },100);
 
         // Show correct infinity buttons (More, All, etc.)
         this.render_infinity_buttons();

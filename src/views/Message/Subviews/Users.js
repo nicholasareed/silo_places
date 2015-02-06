@@ -183,7 +183,9 @@ define(function(require, exports, module) {
         var userView = new LayoutBuilder({
             surface: {
                 surface: new Surface({
-                    content: S(Model.get('name')),
+                    content: function(){
+                        return S(Model.get('name'));
+                    },
                     wrap: '<div></div>',
                     size: [undefined, true],
                     classes: ['data-item-default']
@@ -191,11 +193,15 @@ define(function(require, exports, module) {
                 click: function(){
                     App.history.navigate('inbox/' + Model.get('_id'));
                 },
-                events: function(){
-                    Timer.setTimeout(function(){
-                        userView.surface.pipe(that.contentLayout);
-                        userView.surface.pipe(that._eventOutput);
-                    },1);
+                pipe: [that.contentLayout, that._eventOutput],
+                events: function(surface){
+                    // that._eventInput.on('inOutTransition', function(){
+                    //     Model.trigger('change');
+                    // });
+                    Model.on('change', function(){
+                        // Not working for some reason????
+                        surface.updateContent();
+                    });
                 }
             }
         });

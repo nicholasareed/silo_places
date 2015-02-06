@@ -259,6 +259,10 @@
                                 if(options.success){
                                     options.success(model.attributes);
                                 }
+
+                                // Emit local event on model
+                                model.trigger('change');
+
                             },1);
                         
                         }

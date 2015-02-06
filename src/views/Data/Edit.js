@@ -197,8 +197,9 @@ define(function(require, exports, module) {
                 }]
             }
         });
-
-        this.layout.content.add(this.content);
+    
+        this.ContentStateModifier = new StateModifier();
+        this.layout.content.add(this.ContentStateModifier).add(this.content);
 
     };
 
@@ -236,7 +237,7 @@ define(function(require, exports, module) {
 
                         Timer.setTimeout(function(){
 
-                            // that.ContentStateModifier.setTransform(Transform.translate((window.innerWidth * (goingBack ? 1.5 : -1.5)),0,0), transitionOptions.outTransition);
+                            that.ContentStateModifier.setTransform(Transform.translate((window.innerWidth * (goingBack ? 1.5 : -1.5)),0,0), transitionOptions.outTransition);
 
                         }, delayShowing);
 
@@ -259,14 +260,14 @@ define(function(require, exports, module) {
                         transitionOptions.inTransform = Transform.identity;
 
 
-                        // that.ContentStateModifier.setTransform(Transform.translate((window.innerWidth * (goingBack ? -1.5 : 1.5)),0,0));
+                        that.ContentStateModifier.setTransform(Transform.translate((window.innerWidth * (goingBack ? -1.5 : 1.5)),0,0));
 
                         // Content
                         // - extra delay
                         Timer.setTimeout(function(){
 
-                            // // Bring content back
-                            // that.ContentStateModifier.setTransform(Transform.translate(0,0,0), transitionOptions.inTransition);
+                            // Bring content back
+                            that.ContentStateModifier.setTransform(Transform.translate(0,0,0), transitionOptions.inTransition);
 
                         }, delayShowing + transitionOptions.outTransition.duration);
 

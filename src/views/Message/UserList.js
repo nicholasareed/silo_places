@@ -80,24 +80,6 @@ define(function(require, exports, module) {
         // Icons
         this.headerContent = {};
 
-        // quick invite
-        this.headerContent.QuickInvite = new Surface({
-            content: '<i class="icon ion-person-add"></i>',
-            size: [60, undefined],
-            classes: ['header-tab-icon-text-big']
-        });
-        this.headerContent.QuickInvite.on('longtap', function(){
-            Utils.Help('Data/List/Connection');
-        });
-        this.headerContent.QuickInvite.on('click', function(){
-            // Invite somebody
-            // - manually enter data or scan a barcode, nfc, etc. 
-
-            App.history.navigate('friend/add');
-            return;
-
-        });
-
         // create the header
         this.header = new StandardHeader({
             content: "Inbox",
@@ -110,10 +92,10 @@ define(function(require, exports, module) {
             // ]
         });
         this.header._eventOutput.on('back',function(){
-            App.history.back();
+            // App.history.back();
         });
         this.header.navBar.title.on('click',function(){
-            App.history.back();
+            // App.history.back();
         });
 
         this._eventOutput.on('inOutTransition', function(args){
@@ -166,6 +148,7 @@ define(function(require, exports, module) {
                                 var UsersSubview = new UsersView({
                                     modelName: 'Connection'
                                 });
+                                that._subviews.push(UsersSubview);
                                 that.content.ListHolder.Users.show(UsersSubview);
                             },1);
                         },
